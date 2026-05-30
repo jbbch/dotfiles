@@ -56,10 +56,51 @@ link_file() {
   ln -s "$source" "$dest"
 }
 
+configure_nvm() {
+  log "Configuring nvm and Node.js LTS"
+
+  export NVM_DIR="$HOME/.nvm"
+  mkdir -p "$NVM_DIR"
+
+  local nvm_sh
+  nvm_sh="$(brew --prefix nvm)/nvm.sh"
+
+  if [ ! -s "$nvm_sh" ]; then
+    echo "nvm was not found at $nvm_sh" >&2
+    return 1
+  fi
+
+  # shellcheck disable=SC1090
+  . "$nvm_sh"
+
+  nvm install --lts
+  nvm alias default 'lts/*'
+  nvm use default
+
+  log "Installing global npm packages"
+  npm install -g @earendil-works/pi-coding-agent pi-mcp-adapter
+
+  local zshrc="$HOME/.zshrc"
+  local marker="# >>> dotfiles nvm >>>"
+
+  if [ ! -f "$zshrc" ] || ! grep -Fq "$marker" "$zshrc"; then
+    log "Adding nvm setup to $zshrc"
+    cat >> "$zshrc" <<'EOF'
+
+# >>> dotfiles nvm >>>
+export NVM_DIR="$HOME/.nvm"
+[ -s "$(brew --prefix nvm)/nvm.sh" ] && . "$(brew --prefix nvm)/nvm.sh"
+# <<< dotfiles nvm <<<
+EOF
+  fi
+}
+
 ensure_homebrew
 
 log "Installing Homebrew bundle"
 brew bundle --file "$DOTFILES_DIR/Brewfile"
+
+configure_nvm
 
 log "Linking Karabiner and Hammerspoon configs"
 link_file "$DOTFILES_DIR/hammerspoon/init.lua" "$HOME/.hammerspoon/init.lua"

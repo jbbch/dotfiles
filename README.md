@@ -4,7 +4,7 @@ Bootstrap files for setting up a new Mac with Karabiner-Elements, Hammerspoon, H
 
 ## What's included
 
-- `Brewfile` — Homebrew formulae, casks, VS Code extensions, and global npm packages captured from this Mac.
+- `Brewfile` — curated Homebrew formulae and casks for a new Mac.
 - `hammerspoon/init.lua` — Hammerspoon config.
 - `karabiner/karabiner.json` — Karabiner-Elements config.
 - `bootstrap.sh` — One-command curl installer that downloads/clones this repo and runs `install.sh`.
@@ -37,9 +37,11 @@ The installer will:
 
 1. Install Homebrew if missing.
 2. Run `brew bundle` against `Brewfile`.
-3. Back up existing Karabiner/Hammerspoon config files under `~/.dotfiles-backups/`.
-4. Symlink configs from this repo into the expected macOS locations.
-5. Open Karabiner-Elements and Hammerspoon.
+3. Install Node.js LTS with `nvm`.
+4. Install global npm packages for Pi tooling.
+5. Back up existing Karabiner/Hammerspoon config files under `~/.dotfiles-backups/`.
+6. Symlink configs from this repo into the expected macOS locations.
+7. Open Karabiner-Elements and Hammerspoon.
 
 ## Manual macOS permissions
 
@@ -53,7 +55,7 @@ macOS does not allow these security prompts to be fully automated. After running
 
 ## Updating this repo from your current Mac
 
-After changing your local configs or installed Homebrew apps:
+After changing your local Karabiner or Hammerspoon configs:
 
 ```sh
 cd ~/dotfiles
@@ -62,6 +64,8 @@ git diff
 git add .
 git commit -m "Update dotfiles"
 ```
+
+`scripts/capture-current.sh` also writes `Brewfile.current` for review, but it is ignored by git so removed/experimental apps do not get re-added by accident.
 
 ## Notes
 
