@@ -1,10 +1,11 @@
 # dotfiles
 
-Bootstrap files for setting up a new Mac with Karabiner-Elements, Hammerspoon, Homebrew apps, and related developer tools.
+Bootstrap files for setting up a new Mac with Karabiner-Elements, Hammerspoon, Neovim, Homebrew apps, and related developer tools.
 
 ## What's included
 
 - `Brewfile` — curated Homebrew formulae and casks for a new Mac.
+- Neovim config is installed from [`jbbch/kickstart.nvim`](https://github.com/jbbch/kickstart.nvim) into `~/.config/nvim`.
 - `hammerspoon/init.lua` — Hammerspoon config.
 - `karabiner/karabiner.json` — Karabiner-Elements config.
 - `bootstrap.sh` — One-command curl installer that downloads/clones this repo and runs `install.sh`.
@@ -39,9 +40,10 @@ The installer will:
 2. Run `brew bundle` against `Brewfile`.
 3. Install Node.js LTS with `nvm`.
 4. Install global npm packages for Pi tooling.
-5. Back up existing Karabiner/Hammerspoon config files under `~/.dotfiles-backups/`.
-6. Symlink configs from this repo into the expected macOS locations.
-7. Open Karabiner-Elements and Hammerspoon.
+5. Clone or update your Neovim config from `https://github.com/jbbch/kickstart.nvim.git` into `~/.config/nvim`.
+6. Back up existing Karabiner/Hammerspoon/Neovim config files under `~/.dotfiles-backups/` when needed.
+7. Symlink Karabiner and Hammerspoon configs from this repo into the expected macOS locations.
+8. Open Karabiner-Elements and Hammerspoon.
 
 ## Manual macOS permissions
 

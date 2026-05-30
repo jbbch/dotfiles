@@ -3,6 +3,8 @@ set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKUP_DIR="$HOME/.dotfiles-backups/$(date +%Y%m%d-%H%M%S)"
+NVIM_REPO_URL="${NVIM_REPO_URL:-https://github.com/jbbch/kickstart.nvim.git}"
+NVIM_CONFIG_DIR="${NVIM_CONFIG_DIR:-$HOME/.config/nvim}"
 
 log() {
   printf '\n==> %s\n' "$1"
@@ -56,6 +58,19 @@ link_file() {
   ln -s "$source" "$dest"
 }
 
+install_or_update_nvim_config() {
+  if [ -d "$NVIM_CONFIG_DIR/.git" ]; then
+    log "Updating Neovim config at $NVIM_CONFIG_DIR"
+    git -C "$NVIM_CONFIG_DIR" pull --ff-only
+    return
+  fi
+
+  backup_path "$NVIM_CONFIG_DIR"
+
+  log "Cloning Neovim config from $NVIM_REPO_URL to $NVIM_CONFIG_DIR"
+  git clone "$NVIM_REPO_URL" "$NVIM_CONFIG_DIR"
+}
+
 configure_nvm() {
   log "Configuring nvm and Node.js LTS"
 
@@ -101,6 +116,8 @@ log "Installing Homebrew bundle"
 brew bundle --file "$DOTFILES_DIR/Brewfile"
 
 configure_nvm
+
+install_or_update_nvim_config
 
 log "Linking Karabiner and Hammerspoon configs"
 link_file "$DOTFILES_DIR/hammerspoon/init.lua" "$HOME/.hammerspoon/init.lua"
