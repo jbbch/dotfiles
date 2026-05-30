@@ -65,8 +65,6 @@ git add .
 git commit -m "Update dotfiles"
 ```
 
-`scripts/capture-current.sh` also writes `Brewfile.current` for review, but it is ignored by git so removed/experimental apps do not get re-added by accident.
-
 ## Notes
 
 - Existing target config files are moved to `~/.dotfiles-backups/<timestamp>/` before symlinking.
