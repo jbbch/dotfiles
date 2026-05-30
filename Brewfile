@@ -1,5 +1,7 @@
 # CLI tools
+brew "fd"
 brew "gh"
+brew "git"
 brew "glow"
 brew "neovim"
 brew "nvm"
