@@ -7,6 +7,7 @@ Bootstrap files for setting up a new Mac with Karabiner-Elements, Hammerspoon, H
 - `Brewfile` — Homebrew formulae, casks, VS Code extensions, and global npm packages captured from this Mac.
 - `hammerspoon/init.lua` — Hammerspoon config.
 - `karabiner/karabiner.json` — Karabiner-Elements config.
+- `bootstrap.sh` — One-command curl installer that downloads/clones this repo and runs `install.sh`.
 - `install.sh` — New Mac bootstrap script.
 - `scripts/capture-current.sh` — Refresh this repo from the current machine.
 
@@ -18,10 +19,16 @@ Install Apple's command line tools first if needed:
 xcode-select --install
 ```
 
-Then clone this repo and run the installer:
+Recommended one-command install, after this repo is pushed to GitHub:
 
 ```sh
-git clone <your-repo-url> ~/dotfiles
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/jbbch/dotfiles/main/bootstrap.sh)"
+```
+
+Or clone this repo manually and run the installer:
+
+```sh
+git clone https://github.com/jbbch/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./install.sh
 ```
