@@ -19,7 +19,7 @@ Install Apple's command line tools first if needed:
 xcode-select --install
 ```
 
-Recommended one-command install, after this repo is pushed to GitHub:
+Recommended one-command install:
 
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/jbbch/dotfiles/main/bootstrap.sh)"
